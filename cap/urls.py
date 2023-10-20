@@ -42,6 +42,6 @@ urlpatterns = [
     
     path('admin/', admin.site.urls),
     
-    path('patentAttorneys/', include('patentAttorneys.urls', namespace='patentAttorneys')),
-    path('patentNotices/', include('patentNotices.urls', namespace='patentNotices'))
+    path('farm/', include('server.urls', namespace='server')),
+
 ]

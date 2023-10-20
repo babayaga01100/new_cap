@@ -1,10 +1,31 @@
+from rest_framework import generics
+
 from django.shortcuts import render
 
 from .models import SmartFarm
-from .
+from .serializers import DoorListModelSerializer, FanListModelSerializer, InfoListModelSerializer, LedListModelSerializer, SmartFarmBaseModelSerializer, WarningListModelSerializer, WaterListModelSerializer
 
 # Create your views here.
-class LedView(generics.ListAPIView):
-    get_led = [IsAdminUser]
-    queryset = Post.objects.all()
+class InfoView(generics.ListAPIView):
+    queryset = SmartFarm.objects.all()
+    serializer_class = InfoListModelSerializer
     
+class LedView(generics.ListAPIView):
+    queryset = SmartFarm.objects.all()
+    serializer_class = LedListModelSerializer
+    
+class WaterView(generics.ListAPIView):
+    queryset = SmartFarm.objects.all()
+    serializer_class = WaterListModelSerializer
+    
+class FanView(generics.ListAPIView):
+    queryset = SmartFarm.objects.all()
+    serializer_class = FanListModelSerializer
+    
+class DoorView(generics.ListAPIView):
+    queryset = SmartFarm.objects.all()
+    serializer_class = DoorListModelSerializer
+    
+class WarningView(generics.ListAPIView):
+    queryset = SmartFarm.objects.all()
+    serializer_class = WarningListModelSerializer
