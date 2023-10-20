@@ -10,7 +10,11 @@ class SmartFarmBaseModelSerializer(ModelSerializer):
 
 class InfoListModelSerializer(SmartFarmBaseModelSerializer):
     class Meta(SmartFarmBaseModelSerializer.Meta):
-        fields = ['id', 'sfid', 'remotepower', 'remperature', 'humidity']
+        fields = ['id', 
+                  'sfid', 
+                  'remotepower', 
+                  'remperature', 
+                  'humidity']
         
 class LedListModelSerializer(SmartFarmBaseModelSerializer):
     class Meta(SmartFarmBaseModelSerializer.Meta):
