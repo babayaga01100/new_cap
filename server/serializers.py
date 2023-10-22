@@ -1,19 +1,19 @@
 from rest_framework.serializers import ModelSerializer
 
-from .models import SmartFarm
+from .models import SmartFarmSensor
 
 class SmartFarmBaseModelSerializer(ModelSerializer):
     class Meta:
-        model = SmartFarm
+        model = SmartFarmSensor
         fields = '__all__'
         # exclude = ("")
-
+    
 class InfoListModelSerializer(SmartFarmBaseModelSerializer):
     class Meta(SmartFarmBaseModelSerializer.Meta):
         fields = ['id', 
                   'sfid', 
                   'remotepower', 
-                  'remperature', 
+                  'temperature', 
                   'humidity']
         
 class LedListModelSerializer(SmartFarmBaseModelSerializer):
@@ -29,38 +29,38 @@ class LedListModelSerializer(SmartFarmBaseModelSerializer):
         
 class WaterListModelSerializer(SmartFarmBaseModelSerializer):
     class Meta(SmartFarmBaseModelSerializer.Meta):
-        filed = ['water_pump_power',
-                'water_pump_state',
-                'water_pump_toggle',
-                'water_pump_auto_toggle',
-                'water_pump_start_time',
-                'water_pump_running_time',
-                'water_level_voltage',
-                'water_temperature']
+        filed = ['waterpumppower',
+                'waterpumpstate',
+                'waterpumptoggle',
+                'waterpumpautotoggle',
+                'waterpumpstarttime',
+                'waterpumprunningtime',
+                'waterlevelvoltage',
+                'watertemperature']
 class FanListModelSerializer(SmartFarmBaseModelSerializer):
     class Meta(SmartFarmBaseModelSerializer.Meta):
         field = [
-            'fan_power',
-            'fan_state',
-            'fan_toggle',
-            'fan_auto_toggle',
-            'fan_start_time_value',
-            'fan_start_minute_value',
-            'fan_end_time_value',
-            'fan_end_minute_value'
+            'fanpower',
+            'fanstate',
+            'fantoggle',
+            'fanautotoggle',
+            'fanstarttimevalue',
+            'fanstartminutevalue',
+            'fanendtimevalue',
+            'fanendminutevalue'
         ]
         
 class DoorListModelSerializer(SmartFarmBaseModelSerializer):
     class Meta(SmartFarmBaseModelSerializer.Meta):
         field = [
-                'door_power',
-                'door_state',
-                'door_toggle',
-                'door_auto_toggle',
-                'door_start_time_value',
-                'door_start_minute_value',
-                'door_end_time_value',
-                'door_end_minute_value'
+                'doorpower',
+                'doorstate',
+                'doortoggle',
+                'doorautotoggle',
+                'doorstarttimevalue',
+                'doorstartminutevalue',
+                'doorendtimevalue',
+                'doorendminutevalue'
         ]
         
 class WarningListModelSerializer(SmartFarmBaseModelSerializer):

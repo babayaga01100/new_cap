@@ -1,17 +1,19 @@
 from django.urls import path
-from cap.server.views import DoorView, FanView, InfoView, LedView, WarningView, WaterView
+from .views import DoorView, FanView, InfoView, LedView, RaspberryView, WarningView, WaterView
 
 app_name = 'server'
 
 urlpatterns = [
     # path('', PatentAttorneyListView.as_view(), name='patent-attorney-list'),
     # path('<int:pk>/', PatentAttorneyRetrieveView.as_view(), name='patent-attorney-retrieve')
-    path('/info', InfoView.as_view(), name='info'),
-    path('/led', LedView.as_view(), name='led'),
-    path('/water', WaterView.as_view(), name='water'),
-    path('/fan', FanView.as_view(), name='fan'),
-    path('/door', DoorView.as_view(), name='door'),
-    path('/warning', WarningView.as_view(), name='warning'),
+    path('raspberry', RaspberryView.as_view()),
+    path('info', InfoView.as_view()),
+    path('led', LedView.as_view()),
+    path('water', WaterView.as_view()),
+    path('fan', FanView.as_view()),
+    path('door', DoorView.as_view()),
+    path('warning', WarningView.as_view()),
     
     
 ]
+
