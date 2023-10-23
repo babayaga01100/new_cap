@@ -21,21 +21,25 @@ from django.shortcuts import render
 from .models import SmartFarmSensor
 from .serializers import DoorListModelSerializer, FanListModelSerializer, InfoListModelSerializer, LedListModelSerializer, SmartFarmBaseModelSerializer, WarningListModelSerializer, WaterListModelSerializer
 
+
+
 # Create your views here.
-class RaspberryView(generics.ListAPIView):
+class RaspberryView(APIView):
     # queryset = SmartFarmSensor.objects.all()
     serializer_class = SmartFarmBaseModelSerializer
     
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
     
-    def get_queryset(self):
-        # 최신 ID 값을 기준으로 QuerySet 필터링
-        latest_id = SmartFarmSensor.objects.latest('id').id
-        queryset = SmartFarmSensor.objects.filter(id=latest_id)
-        return queryset
+    def get(self, request):
+        try:
+            smartfarm = SmartFarmSensor.objects.get(user_id=request.user)
+        except SmartFarmSensor.DoesNotExist:
+            return Response({'message': '등록한 스마트팜이 없습니다.'}, status=404)
+        
 
     def post(self, request):
+        user_id = request.data['user_id']
         sfid = request.data['sfid']
         remotepower = request.data['remotepower']
         temperature = request.data['temperature']
@@ -85,7 +89,20 @@ class RaspberryView(generics.ListAPIView):
         humwarning = request.data['humwarning']
         soilwarning = request.data['soilwarning']
         
+        try:
+            smartfarm = SmartFarmSensor.objects.get(user_id=request.user)
+        except SmartFarmSensor.DoesNotExist:
+            return Response({'message': '등록한 스마트팜이 없습니다.'}, status=404)
+        
+        # if not SmartFarmSensor.objects.filter(
+        #     user_name=user_name,
+        #     user_id=user_id,
+        #     phone_number=phone_number
+        # ).exists():
+        # return Response({'message': '해당 사용자 정보가 없습니다.'}, status=404)
+    
         SmartFarmSensor(
+            user_id = user_id,
             sfid = sfid,
             remotepower = remotepower,
             temperature = temperature,
@@ -159,6 +176,14 @@ class InfoView(generics.ListAPIView):
         temperature = request.data['temperature']
         humidity = request.data['humidity']
 
+        if not SmartFarmSensor.objects.filter(
+            sfid=sfid,
+            remotepower=remotepower,
+            temperature=temperature,
+            humidity=humidity
+        ).exists():
+            return Response({'message': 'Error'}, status=404)
+    
         latest_id = SmartFarmSensor.objects.latest('id').id
         SmartFarmSensor.objects.filter(id=latest_id).update(sfid=sfid, remotepower=remotepower, temperature=temperature, humidity=humidity)
         return Response({'su':'ccess_info'})
@@ -202,13 +227,10 @@ class WaterView(generics.ListAPIView):
         waterpumpautotoggle = request.data['waterpumpautotoggle']
         waterpumpstarttime = request.data['waterpumpstarttime']
         waterpumprunningtime = request.data['waterpumprunningtime']
-        waterlevelvoltage = request.data['waterlevelvoltage']
-        watertemperature = request.data['watertemperature']
 
         latest_id = SmartFarmSensor.objects.latest('id').id
         SmartFarmSensor.objects.filter(id=latest_id).update(waterpumptoggle=waterpumptoggle, waterpumpautotoggle=waterpumpautotoggle, 
-                                        waterpumpstarttime=waterpumpstarttime, waterpumprunningtime=waterpumprunningtime, 
-                                        waterlevelvoltage=waterlevelvoltage, watertemperature=watertemperature)
+                                        waterpumpstarttime=waterpumpstarttime, waterpumprunningtime=waterpumprunningtime)
         return Response({'su':'ccess_water'})
         
     def get_queryset(self):

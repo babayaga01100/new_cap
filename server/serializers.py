@@ -11,6 +11,7 @@ class SmartFarmBaseModelSerializer(ModelSerializer):
 class InfoListModelSerializer(SmartFarmBaseModelSerializer):
     class Meta(SmartFarmBaseModelSerializer.Meta):
         fields = ['id', 
+                  'userid',
                   'sfid', 
                   'remotepower', 
                   'temperature', 
@@ -30,13 +31,14 @@ class LedListModelSerializer(SmartFarmBaseModelSerializer):
 class WaterListModelSerializer(SmartFarmBaseModelSerializer):
     class Meta(SmartFarmBaseModelSerializer.Meta):
         filed = ['waterpumppower',
-                'waterpumpstate',
-                'waterpumptoggle',
-                'waterpumpautotoggle',
-                'waterpumpstarttime',
-                'waterpumprunningtime',
-                'waterlevelvoltage',
-                'watertemperature']
+                 'waterpumpstate',
+                 'waterpumptoggle',
+                 'waterpumpautotoggle',
+                 'waterpumpstarttime',
+                 'waterpumprunningtime',
+                 'waterlevelvoltage',
+                 'watertemperature']
+        
 class FanListModelSerializer(SmartFarmBaseModelSerializer):
     class Meta(SmartFarmBaseModelSerializer.Meta):
         field = [
